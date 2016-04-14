@@ -1,0 +1,15 @@
+{{# each files }}
+  <div data-component="file" data-path="{{ this.path }}" class="file-container" data-selector="{{ this.type }}" data-state="closed">
+    <button class="add-comment-button" data-selector="add-comment-button">Add comment</button>
+    Path: {{ this.path }}<br>
+    Name: {{ this.name }}<br>
+    Type: {{ this.type }}<br>
+    Content: {{ this.children }} files<br>
+    Comments: <br>
+    <div class="comment-container">
+      {{# each this.comments }}
+        - {{ this.comment }} <br>
+      {{/each}}
+    </div>
+  </div>
+{{/each}}
