@@ -1,15 +1,35 @@
 {{# each files }}
-  <div data-component="file" data-path="{{ this.path }}" class="file-container" data-selector="{{ this.type }}" data-state="closed">
+  <div data-component="file" data-path="{{ this.path }}" class="file-container" data-selector="{{ this.type }}"
+       data-state="closed">
     <button class="add-comment-button" data-selector="add-comment-button">Add comment</button>
-    Path: {{ this.path }}<br>
-    Name: {{ this.name }}<br>
-    Type: {{ this.type }}<br>
-    Content: {{ this.children }} files<br>
-    Comments: <br>
-    <div class="comment-container">
-      {{# each this.comments }}
-        - {{ this.comment }} <br>
-      {{/each}}
+
+    {{# if this.children }}
+      <img src="images/folder-icon80x80.png" data-selector="folder-ico">
+    {{/if}}
+    {{# unless this.children }}
+      <img src="images/file-icon80x80.png">
+    {{/unless}}
+
+    <div class="info">
+      <b>Name:</b> {{ this.name }}<br>
+      <b>Type:</b> {{ this.type }}<br>
+      {{# if this.children }}
+        <b>Content:</b> {{ this.children }} files<br>
+      {{/if}}
+      <b>Path:</b> {{ this.path }}<br>
     </div>
+    {{# if this.comments }}
+      <br>
+      <div class="comments">
+        <b>Comments:</b> <br>
+        <div class="comment-container" data-selector="comment-container">
+          {{# each this.comments }}
+            - {{ this.comment }} <br>
+          {{/each}}
+        </div>
+      </div>
+    {{/if}}
+    <input data-selector="comment-input" class="js-hidden comment-input">
+    <button data-selector="save-comment-button" class="js-hidden save-button">Save</button>
   </div>
 {{/each}}

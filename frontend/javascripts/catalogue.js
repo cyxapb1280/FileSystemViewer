@@ -10,7 +10,7 @@ class Catalogue {
   constructor(options) {
     this._el = options.element;
 
-    this._el.addEventListener('click', this._onFolderClick.bind(this));
+    this._el.addEventListener('click', this._onFolderIcoClick.bind(this));
     this._el.addEventListener('click', this._onAddCommentClick.bind(this));
     this._el.addEventListener('click', this._onSaveCommentClick.bind(this));
   }
@@ -23,12 +23,13 @@ class Catalogue {
     });
   }
 
-  _onFolderClick(event) {
-    let folderElement = event.target;
-    if (folderElement.dataset.selector !== 'folder') {
+  _onFolderIcoClick(event) {
+    if (event.target.dataset.selector !== 'folder-ico') {
       return;
     }
 
+    let folderElement = event.target.closest('[data-selector="folder"]');
+    
     let state = folderElement.dataset.state;
 
     if (state === 'closed') {
@@ -47,7 +48,7 @@ class Catalogue {
     }
 
     let fileElement = button.closest('[data-component="file"]');
-    this._addCommentFormTo(fileElement);
+    this._showCommentFormOn(fileElement);
   }
 
   _onSaveCommentClick(event) {
@@ -61,10 +62,10 @@ class Catalogue {
     let comment = commentInput.value;
 
     this._sendCommentToServer(comment, fileElement);
-    commentInput.remove();
-    button.remove();
+    commentInput.classList.add('js-hidden');
+    button.classList.add('js-hidden');
 
-    fileElement.innerHTML += comment + '<br>';
+    this._addCommentToContainer(fileElement, comment);
   }
 
   _expandFolder(folderElement) {
@@ -88,16 +89,12 @@ class Catalogue {
     folderElement.dataset.state = 'closed';
   }
 
-  _addCommentFormTo(element) {
-    let input = document.createElement('input');
-    let button = document.createElement('button');
+  _showCommentFormOn(element) {
+    let input = element.querySelector('[data-selector="comment-input"]');
+    let button = element.querySelector('[data-selector="save-comment-button"]');
 
-    input.setAttribute('data-selector', 'comment-input');
-    element.appendChild(input);
-
-    button.innerHTML = 'Save';
-    button.setAttribute('data-selector', 'save-comment-button');
-    element.appendChild(button);
+    input.classList.remove('js-hidden');
+    button.classList.remove('js-hidden');
   }
 
   _sendCommentToServer(comment, fileElement) {
@@ -141,7 +138,12 @@ class Catalogue {
       callback(JSON.parse(req.responseText));
     };
   }
-  
+
+  _addCommentToContainer(element, comment) {
+    let container = element.querySelector('[data-selector="comment-container"]');
+
+    container.insertAdjacentHTML('beforeEnd', '- ' + comment);
+  }
 }
 
 module.exports = Catalogue;
