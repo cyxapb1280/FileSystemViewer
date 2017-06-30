@@ -1,0 +1,61 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.file-container {
+  box-shadow: 0 0 10px -2px black;
+  position: relative;
+  left: 1em;
+  padding: 1em;
+  margin: 1em;
+  display: block;
+  background-color: #f7f7f7;
+}
+
+.add-comment-button {
+  float: right;
+}
+
+.page {
+  align: center;
+  width: 50em;
+}
+
+.comment-container {
+  border-left: 1px solid black;
+  position: relative;
+  left: 0.5em;
+  padding: 0.2em;
+  margin: 0.2em;
+  display: block;
+}
+
+.js-hidden {
+  display: none;
+}
+
+.comment-input {
+  margin: 1em;
+  margin-bottom: 0;
+  width: 70%;
+}
+
+.save-button {
+  width: 20%;
+}
+
+.info {
+  display: inline-block;
+}
+
+img {
+  display: inline-block;
+}
+
+.comments {
+}
